@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 
-namespace task1
+namespace Logic
 {
-    class Program
+    public class CombinationsCalculator
     {
         /// <summary>
         /// A program that reads the amount of money from a file and writes to the file the number of ways to collect this amount in coins of 1, 5, 10, 50 and 100.
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             int N;
             string inpPath = "../input.txt";
@@ -19,16 +19,20 @@ namespace task1
                 using (StreamReader sr = new StreamReader(inpPath, System.Text.Encoding.Default))
                 {
                     N = Int32.Parse(sr.ReadLine());
+                    if (N < 0)
+                    {
+                        throw new ArgumentException("Incorrect input");
+                    }
                 }
             }
-            catch(Exception e)
+            catch
             {
-                throw new Exception("Incorrect input", e);
+                throw new ArgumentException("Incorrect input");
             }
 
             using (StreamWriter sw = new StreamWriter(outPath, false, System.Text.Encoding.Default))
             {
-                sw.WriteLine(sum(N / 5));
+                sw.WriteLine(sum(N));
             }
 
         }
@@ -95,13 +99,14 @@ namespace task1
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="i"> N / 5, where N is sum of money (number of step)</param>
+        /// <param name="N">Sum of money</param>
         /// <returns>number of exchange methods for this step</returns>
-        static int sum(int i)
+        public static int sum(int N)
         {
-            if (i >= 0)
+            int i = N / 5;
+            if (N >= 0)
             {
-                return sum(i - 1) + newCombinations(1, i) + newCombinations(5, i) + newCombinations(10, i) + newCombinations(50, i) + newCombinations(100, i);
+                return sum(N - 5) + newCombinations(1, i) + newCombinations(5, i) + newCombinations(10, i) + newCombinations(50, i) + newCombinations(100, i);
             }
             else
             {
