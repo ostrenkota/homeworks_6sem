@@ -34,8 +34,8 @@ namespace Logic
             {
                 sw.WriteLine(sum(N));
             }
-
         }
+
         /// <summary>
         /// 
         /// </summary>

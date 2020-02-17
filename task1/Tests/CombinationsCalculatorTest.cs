@@ -3,12 +3,29 @@ using Logic;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Diagnostics;
 
 namespace Tests
 {
     [TestFixture]
     public class CombinationsCalculatorTest
     {
+        private Stopwatch sw;
+
+        [SetUp]
+        public void Init()
+        {
+            sw = Stopwatch.StartNew();
+        }
+
+        [TearDown]
+        public void Cleanup()
+        {
+            sw.Stop();
+            Console.WriteLine("Excution time for {0} - {1} ms",
+                TestContext.CurrentContext.Test.Name, sw.ElapsedMilliseconds);
+        }
+
         [Test]
         public void checkCorrectValues()
         {
