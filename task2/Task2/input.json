@@ -1,0 +1,59 @@
+{
+  "n": 5,
+  "Products": [
+    {
+      "ProduceDate": "2020-02-12T00:00:00",
+      "FreshUntill": "2020-03-01T00:00:00",
+      "Name": "Sausage",
+      "Costs": 199.9
+    },
+    {
+      "ProduceDate": "2020-02-01T00:00:00",
+      "FreshUntill": "2020-02-19T00:00:00",
+      "Name": "Fish",
+      "Costs": 399.9
+    }
+  ],
+  "Consigments": [
+    {
+      "Batch": 30203,
+      "ProduceDate": "2020-02-03T00:00:00",
+      "FreshUntill": "2022-02-03T00:00:00",
+      "Name": "box of chocolates Kinder",
+      "Costs": 100000
+    },
+    {
+      "Batch": 30204,
+      "ProduceDate": "2000-07-14T00:00:00",
+      "FreshUntill": "2019-07-14T00:00:00",
+      "Name": "Chips",
+      "Costs": 2000
+    }
+  ],
+  "Sets": [
+    {
+    "Products": [
+      {
+        "ProduceDate": "2020-02-03T00:00:00",
+        "FreshUntill": "2020-09-18T00:00:00",
+        "Name": "Crushovice Beer",
+        "Costs": 69.90
+      },
+      {
+        "ProduceDate": "2020-02-03T00:00:00",
+        "FreshUntill": "2020-01-18T00:00:00",
+        "Name": "Marlboro cigarrets",
+        "Costs": 120.90
+      },
+      {
+        "ProduceDate": "2020-01-03T00:00:00",
+        "FreshUntill": "2020-12-18T00:00:00",
+        "Name": "Doner kebab",
+        "Costs": 99.90
+      }
+    ],
+    "Name": "Students starter pack",
+    "Costs": 219.7
+    }
+  ]
+}
