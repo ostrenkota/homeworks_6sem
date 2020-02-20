@@ -37,6 +37,11 @@ namespace Task2
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="goods"></param>
+        /// <returns> array of not fresh goods</returns>
         public static Goods[] findNotFreshGoods(Goods[] goods)
         {
             List<Goods> notFreshist = new List<Goods>();
@@ -52,6 +57,9 @@ namespace Task2
         }
     }
 
+    /// <summary>
+    ///  represents the data structure in the input file
+    /// </summary>
     class InputData
     {
         public int n;
