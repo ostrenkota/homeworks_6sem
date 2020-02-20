@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 
 namespace Task2
@@ -26,7 +27,8 @@ namespace Task2
         /// <returns>values ​​of all fields of the class instance</returns>
         public virtual string getInfo()
         {
-           return JsonConvert.SerializeObject(this);
+            Trace.WriteLine("Getting info about " + this.Name);
+            return JsonConvert.SerializeObject(this);
         }
 
         /// <summary>
@@ -57,7 +59,15 @@ namespace Task2
         /// <returns>fresh goods or not</returns>
         public override bool isFresh()
         {
-            return DateTime.Compare(DateTime.Now, FreshUntill) <= 0;
+            bool isFresh = DateTime.Compare(DateTime.Now, FreshUntill) <= 0;
+
+            Trace.WriteLine("Getting fresh status of " + this.Name + " product");
+            Trace.Indent();
+            Trace.WriteLineIf(isFresh, "The product " + this.Name + " is fresh");
+            Trace.WriteLineIf(!isFresh, "The product " + this.Name + " is NOT fresh");
+            Trace.Unindent();
+
+            return isFresh;
         }
 
     }
@@ -85,7 +95,15 @@ namespace Task2
         /// <returns>fresh goods or not</returns>
         public override bool isFresh()
         {
-            return DateTime.Compare(DateTime.Now, FreshUntill) <= 0;
+            bool isFresh = DateTime.Compare(DateTime.Now, FreshUntill) <= 0;
+
+            Trace.WriteLine("Getting fresh status of " + this.Name + " consigment");
+            Trace.Indent();
+            Trace.WriteLineIf(isFresh, "The consigment " + this.Name + " is fresh");
+            Trace.WriteLineIf(!isFresh, "The consigment " + this.Name + " is NOT fresh");
+            Trace.Unindent();
+
+            return isFresh;
         }
     }
     /// <summary>
@@ -107,7 +125,15 @@ namespace Task2
         /// <returns>whether all items in the set are fresh or not </returns>
         public override bool isFresh()
         {
-            return Array.TrueForAll(Products, x => DateTime.Compare(DateTime.Now, x.FreshUntill) <= 0);
+            bool isFresh = Array.TrueForAll(Products, x => DateTime.Compare(DateTime.Now, x.FreshUntill) <= 0);
+
+            Trace.WriteLine("Getting fresh status of " + this.Name + " consigment");
+            Trace.Indent();
+            Trace.WriteLineIf(isFresh, "The set " + this.Name + " is fresh");
+            Trace.WriteLineIf(!isFresh, "The set " + this.Name + " is NOT fresh");
+            Trace.Unindent();
+
+            return isFresh;
         }
     } 
 }

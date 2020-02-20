@@ -2,6 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Task2
 {
@@ -44,6 +45,7 @@ namespace Task2
         /// <returns> array of not fresh goods</returns>
         public static Goods[] findNotFreshGoods(Goods[] goods)
         {
+            Trace.WriteLine("Getting not fresh goods list");
             List<Goods> notFreshist = new List<Goods>();
             foreach (var elem in goods)
             {
