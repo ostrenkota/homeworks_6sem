@@ -3,6 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace Task2
 {
@@ -11,9 +12,9 @@ namespace Task2
         static void Main(string[] args)
         {
             string jsonInfo;
-            using (StreamReader sr = new StreamReader("../../../input.json"))
+            using (StreamReader sr = new StreamReader("../../input.json"))
             {
-                 jsonInfo = sr.ReadToEnd();
+                jsonInfo = sr.ReadToEnd();
             }
 
             InputData info = JsonConvert.DeserializeObject<InputData>(jsonInfo);
@@ -23,7 +24,7 @@ namespace Task2
             goodsList.AddRange(info.Sets);
             var goodsArray = goodsList.ToArray();
 
-            foreach(var elem in goodsArray)
+            foreach (var elem in goodsArray)
             {
                 Console.WriteLine(elem.getInfo());
             }
@@ -35,11 +36,13 @@ namespace Task2
                 Console.WriteLine(elem.Name);
             }
 
+            serializeGoods(goodsArray);
+
             Console.ReadKey();
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="goods"></param>
         /// <returns> array of not fresh goods</returns>
@@ -57,6 +60,20 @@ namespace Task2
 
             return notFreshist.ToArray();
         }
+
+        /// <summary>
+        /// Serializes an array of goods into a file
+        /// </summary>
+        /// <param name="goods"></param>
+        public static void serializeGoods(Goods[] goods)
+        {
+            XmlSerializer formatter = new XmlSerializer(typeof(Goods[]));
+
+            using (FileStream fs = new FileStream("goods.xml", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, goods);
+            }
+        }
     }
 
     /// <summary>
@@ -67,6 +84,6 @@ namespace Task2
         public int n;
         public Product[] Products;
         public Consigment[] Consigments;
-        public Set[] Sets;    
+        public Set[] Sets;
     }
 }

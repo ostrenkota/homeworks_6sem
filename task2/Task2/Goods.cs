@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 
 namespace Task2
@@ -10,8 +11,10 @@ namespace Task2
     /// <summary>
     ///  abstract class to describe goods properties
     /// </summary>
-    abstract class Goods
+    [Serializable, XmlInclude(typeof(Product)), XmlInclude(typeof(Consigment)), XmlInclude(typeof(Set))]
+    public abstract class Goods
     {
+        public Goods() { }
         public Goods(string name, double costs)
         {
             this.Name = name;
@@ -22,17 +25,17 @@ namespace Task2
         public double Costs { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>values ​​of all fields of the class instance</returns>
         public virtual string getInfo()
         {
-            Trace.WriteLine("Getting info about " + this.Name);
+            Trace.WriteLine("Getting info about" + this.Name);
             return JsonConvert.SerializeObject(this);
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>fresh goods or not</returns>
         public abstract bool isFresh();
@@ -41,8 +44,10 @@ namespace Task2
     /// <summary>
     /// class to describe products properties
     /// </summary>
-    class Product : Goods
-    {  
+    [Serializable]
+    public class Product : Goods
+    {
+        public Product() { }
         public Product(string name, double costs, DateTime produceDate, DateTime freshUntill) :
             base(name, costs)
         {
@@ -54,7 +59,7 @@ namespace Task2
         public DateTime FreshUntill { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>fresh goods or not</returns>
         public override bool isFresh()
@@ -75,8 +80,10 @@ namespace Task2
     /// <summary>
     /// class to describe consigment properties
     /// </summary>
-    class Consigment : Goods
+    [Serializable]
+    public class Consigment : Goods
     {
+        public Consigment() { }
         public Consigment(int batch, string name, double costs, DateTime produceDate, DateTime freshUntill) :
              base(name, costs)
         {
@@ -90,7 +97,7 @@ namespace Task2
         public DateTime FreshUntill { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>fresh goods or not</returns>
         public override bool isFresh()
@@ -109,8 +116,10 @@ namespace Task2
     /// <summary>
     /// class to describe set of goods properties
     /// </summary>
-    class Set : Goods
+    [Serializable]
+    public class Set : Goods
     {
+        public Set() { }
         public Set(string name, double costs, Product[] products) :
             base(name, costs)
         {
@@ -120,7 +129,7 @@ namespace Task2
         public Product[] Products;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>whether all items in the set are fresh or not </returns>
         public override bool isFresh()
@@ -135,5 +144,5 @@ namespace Task2
 
             return isFresh;
         }
-    } 
+    }
 }
