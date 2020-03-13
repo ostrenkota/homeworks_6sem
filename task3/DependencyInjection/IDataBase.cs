@@ -4,6 +4,9 @@ using System.Text;
 
 namespace DependencyInjection
 {
+    /// <summary>
+    /// An interface that describes the methods that each sub implementation must support.
+    /// </summary>
     interface IDataBase
     {
         bool createDataBase(string name);
