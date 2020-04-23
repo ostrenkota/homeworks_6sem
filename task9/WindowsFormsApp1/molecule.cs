@@ -22,8 +22,8 @@ namespace WindowsFormsApp1
             this.maxWidth = maxWidth;
             this.maxHeight = maxWidth;
             this.rand = rand;
-            X = rand.Next(1, maxWidth - 2*radius - 1);
-            Y = rand.Next(1, maxHeight - 2*radius - 1);
+            X = rand.Next(1, maxWidth - 2*radius - 20);
+            Y = rand.Next(1, maxHeight - 2*radius - 40);
         }
 
         public void move()
@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
             int bound = (int)Math.Floor(Math.Sqrt(Math.Pow(maxDistance, 2) - Math.Pow(deltaX, 2)));
             int deltaY = rand.Next(- bound, bound + 1);
 
-            if (X + deltaX >= maxWidth - 2*radius - 2)
+            if (X + deltaX >= maxWidth - 2*radius - 20)
             {
                 deltaX = -deltaX;
             }
@@ -41,7 +41,7 @@ namespace WindowsFormsApp1
                 deltaX = -deltaX;
             }
 
-            if (Y + deltaY >= maxHeight - 2 * radius - 2)
+            if (Y + deltaY >= maxHeight - 2 * radius - 40)
             {
                 deltaY = -deltaY;
             }

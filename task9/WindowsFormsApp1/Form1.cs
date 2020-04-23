@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,25 +14,19 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        private Molecule[] molecules;
+        private ConcurrentBag<Molecule> molecules;
         private System.Threading.Timer timer;
-        private int moleculesCount = 5; //TODO: использовать значение от юзера
-        private int timeInterval = 100; //ms TODO: использовать значение от юзера
+        private Task[] tasks;
+        private CancellationTokenSource cancelTokenSource;
+        private CancellationToken token;
+        private int moleculesCount = 5;
+        private int timeInterval = 200;
+        private int standartTimeInterval = 100;
+        
 
         public Form1()
         {
             InitializeComponent();
-           
-        }
-
-        private void step()
-        {
-            foreach (Molecule m in molecules)
-            {
-                m.move();
-            }
-
-            draw();
         }
 
         private void draw()
@@ -70,37 +65,58 @@ namespace WindowsFormsApp1
         }
 
         private void button1_Click(object sender, EventArgs e)
-        { 
+        {    
+            cancelTokenSource = new CancellationTokenSource();
+            token = cancelTokenSource.Token;
+
             if (molecules == null)
             {
-                comboBox1.Enabled = false;
-
                 Random rand = new Random();
-                molecules = new Molecule[moleculesCount];
-                for (int i = 0; i < moleculesCount; i++)
-                {
-                    molecules[i] = new Molecule(panel1.Width, panel1.Height, rand);
-                }
-                var startTimeSpan = Timeout.Infinite;
-                var periodTimeSpan = Timeout.Infinite;
+                comboBox1.Enabled = false;    
+                
+                tasks = new Task[moleculesCount];
 
-                timer = new System.Threading.Timer(v => step(),
-                null, startTimeSpan, periodTimeSpan);
+                molecules = new ConcurrentBag<Molecule>();
+                for (int i = 0; i < moleculesCount; i++)
+                {                   
+                    molecules.Add(new Molecule(panel1.Width, panel1.Height, rand));
+                }
+                   
+                timer = new System.Threading.Timer(v => draw(), null, 
+                    Timeout.Infinite, Timeout.Infinite);
+
                 draw();
             }
+
             timer.Change(0, timeInterval);
+      
+            for (int i = 0; i < moleculesCount; i++)
+            {
+                var index = i;
+                tasks[i] = new Task(() =>
+                {
+                    while (!token.IsCancellationRequested)
+                    {
+                        molecules.ElementAt(index).move();
+                        Thread.Sleep(timeInterval);
+                    }
+                });
+
+                tasks[i].Start();
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            timer.Change(Timeout.Infinite, Timeout.Infinite);
-
+            cancelTokenSource.Cancel();
+            timer.Change(-1, -1);
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            timeInterval = timeInterval / trackBar1.Value;
-            timer.Change(0, timeInterval);
+           timeInterval = standartTimeInterval / trackBar1.Value;
+           timer.Change(0, timeInterval);
         }
     }
 }
