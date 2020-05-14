@@ -8,7 +8,6 @@ namespace SomeProject.Library.Client
 {
     public class Client
     {
-
         private int messagesPort;
         private int filesPort;
 
@@ -18,7 +17,11 @@ namespace SomeProject.Library.Client
             this.filesPort = filesPort;
         }
 
-
+        /// <summary>
+        /// Receiving a message from the server
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         private OperationResult ReceiveMessageFromServer(NetworkStream stream)
         {
             try
@@ -41,6 +44,12 @@ namespace SomeProject.Library.Client
             }
         }
 
+
+        /// <summary>
+        /// Sending a message to the server
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public OperationResult SendMessageToServer(string message)
         {
             try
@@ -62,6 +71,12 @@ namespace SomeProject.Library.Client
             }
         }
 
+
+        /// <summary>
+        /// Sending a file to the server
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public OperationResult SendFileToServer(string path)
         {
             try

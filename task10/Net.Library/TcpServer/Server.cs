@@ -29,6 +29,10 @@ namespace SomeProject.Library.Server
             this.filesPort = filesPort;
         }
 
+        /// <summary>
+        /// Turning off listener
+        /// </summary>
+        /// <returns></returns>
         public bool TurnOffListener()
         {
             try
@@ -46,6 +50,9 @@ namespace SomeProject.Library.Server
             }
         }
 
+        /// <summary>
+        /// Turning on listener
+        /// </summary>
         public void TurnOnListener()
         {
             ThreadPool.SetMaxThreads(maxConnectionsCount, maxConnectionsCount);
@@ -127,6 +134,11 @@ namespace SomeProject.Library.Server
             Interlocked.Decrement(ref currentConnectionsCount);
         }
 
+        /// <summary>
+        /// Receiving a file from client
+        /// </summary>
+        /// <param name="tcpClient"></param>
+        /// <returns></returns>
         private async Task<OperationResult> ReceiveFileFromClient(TcpClient tcpClient)
         {
             try
@@ -194,6 +206,11 @@ namespace SomeProject.Library.Server
             }
         }
 
+        /// <summary>
+        /// Receiving a message from client
+        /// </summary>
+        /// <param name="tcpClient"></param>
+        /// <returns></returns>
         private async Task<OperationResult> ReceiveMessageFromClient(TcpClient tcpClient)
         {
             try
@@ -221,6 +238,13 @@ namespace SomeProject.Library.Server
             }
         }
 
+
+        /// <summary>
+        /// Sending a message to client
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         public OperationResult SendMessageToClient(string message, NetworkStream stream)
         {
             try
