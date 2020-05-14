@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task8
 {
-    class Payment
+    public class Payment
     {
         public int House { get; set; }
         public int Flat { get; set; }
@@ -16,6 +16,18 @@ namespace Task8
         public double Amount { get; set; }
         public double Penalty { get; set; }
         public int Delay { get; set; }
+
+        public bool equals(Payment pay)
+        {
+            return this.House == pay.House
+                && this.Flat == pay.Flat
+                && this.Name == pay.Name
+                && this.Type == pay.Type
+                && this.Date == pay.Date
+                && this.Amount == pay.Amount
+                && this.Penalty == pay.Penalty
+                && this.Delay == pay.Delay;
+        }
 
     }
 }

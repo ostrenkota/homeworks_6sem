@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Task8
 {
-    class DataWorker
+    public class DataWorker
     {
         private List<Payment> data;
         private XDocument xdoc;
@@ -138,6 +138,5 @@ namespace Task8
                 Delay = delay
             });
         }
-
     }
 }
